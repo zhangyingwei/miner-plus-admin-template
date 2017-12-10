@@ -20,12 +20,10 @@
                 </el-button>
             </el-form-item>
             <div class='tips'>测试帐号为:81438234@qq.com 密码：123456</div>
-            
             <router-link to="/sendpwd" class="forget-pwd">
                 忘记密码?(或首次登录)
             </router-link>
         </el-form>
-       
     </div>
 </template>
 
@@ -34,10 +32,7 @@
     import { isEmail } from 'utils/validate';
     import md5 from 'blueimp-md5';
     // import { getQueryObject } from 'utils';
-   
-
     export default {
-      
       name: 'login',
       data() {
         const validateEmail = (rule, value, callback) => {
@@ -95,25 +90,32 @@
       },
       methods: {
         handleLogin() {
-            
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                   this.loading = true;
-                    var  par = JSON.parse(JSON.stringify(this.loginForm)) ;
-                         par.password = md5('@lss'+par.password);
+                  var  par = JSON.parse(JSON.stringify(this.loginForm)) ;
+                  par.password = md5('@lss'+par.password);
 
-                    this.$store.dispatch('LoginByEmail', par).then(() => {
+                  this.$store.dispatch('LoginByEmail', par).then(() => {
                     this.loading = false;
-                   
                     console.log('登陆成功即将跳转--------')
                     this.$router.push({ path: '/' });
-                   
-                        
                     // this.showDialog = true;
                   }).catch(err => {
                     this.$message.error(err);
                     this.loading = false;
                   });
+
+                  // this.$store.dispatch('GetInfo').then(res => { // 拉取user_info
+                  //   console.log('已获取到用户信息',store.getters.userInfo)
+                  //   this.loading = false;
+                  //   this.$router.push({ path: '/' });
+                  //   next();
+                  // }).catch(err => {
+                  //     console.log(err);
+                  //     this.$message.error(err);
+                  //     this.loading = false;
+                  // });
                 } else {
                   console.log('error submit!!');
                   return false;

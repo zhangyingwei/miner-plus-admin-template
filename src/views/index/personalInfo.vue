@@ -2,7 +2,6 @@
   <div class="app-container">
         <el-row :gutter="20">
             <el-col :span="8">
-                
                 <div class="user_img" >
                     <img :src="personalInfo.avatar" alt="用户头像" >
                     <p>
@@ -11,14 +10,12 @@
                         </button>
                     </p>
                 </div>
-                
             </el-col>
 
             <el-col :span="16">
                 <div class="user_info">
                     <h2>个人信息 <el-button size="small" v-if="!editable" @click="editable = true" style="float:right;" icon="edit">编辑</el-button> </h2>
                     <div class="user_info_form" v-if="editable">
-                      
                         <el-form label-position="right" label-width="100px" :model="personalInfo">
 
                               <el-form-item label="昵称">
@@ -57,23 +54,17 @@
                               </el-form-item>
                               <el-form-item label="真实姓名：">
                                 {{ personalInfo.trueName }}
-                               
                               </el-form-item>
                               <el-form-item label="性别：">
                                 <span v-if="personalInfo.sex == 'man'">男</span>
                                 <span v-else>女</span>
-                                   
                               </el-form-item>
                               <el-form-item label="邮件地址：">
                                 {{ personalInfo.email }}
-                               
                               </el-form-item>
                               <el-form-item label="个人简介：">
                                 {{ personalInfo.introduction }}
-                               
                               </el-form-item>
-
-                             
                         </el-form>
                     </div>
                 </div>
@@ -103,7 +94,6 @@ export default {
     },
   mounted() {
     var vm = this;
-        
         vm.resetForm();
    },
   methods: {

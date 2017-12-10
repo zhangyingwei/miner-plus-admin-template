@@ -7,14 +7,61 @@
             <router-link  to="/index/personalInfo"  v-if="routes['/index/personalInfo']" >
                 <el-menu-item index="/index/personalInfo">
                     <i class="fa fa-home" aria-hidden="true"></i> 首页
-            
                 </el-menu-item>
             </router-link>
+
+            <!-- 三级菜单 示例-->
+            <el-submenu index="订阅管理" >
+                <template slot="title">
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i> 订阅管理
+                </template>
+                <router-link  class="menu-indent" to="/subscribe/new">
+                    <el-menu-item index="/subscribe/new">
+                        订阅信息管理
+                    </el-menu-item>
+                </router-link>
+            </el-submenu>
+            <!-- 源管理 示例-->
+            <el-submenu index="源管理" >
+                <template slot="title">
+                    <i class="fa fa-rss" aria-hidden="true"></i> 源管理
+                </template>
+                <router-link  class="menu-indent" to="/resources/new">
+                    <el-menu-item index="/resources/new">
+                        新源管理
+                    </el-menu-item>
+                </router-link>
+                <router-link  class="menu-indent" to="/resources/all">
+                    <el-menu-item index="/resources/all">
+                        所有源
+                    </el-menu-item>
+                </router-link>
+            </el-submenu>
+            <!-- 内容管理 示例-->
+            <el-submenu index="内容管理" >
+                <template slot="title">
+                    <i class="fa fa-code" aria-hidden="true"></i> 内容管理
+                </template>
+                <router-link  class="menu-indent" to="/content/new">
+                    <el-menu-item index="/content/new">
+                        新抓取内容
+                    </el-menu-item>
+                </router-link>
+                <router-link  class="menu-indent" to="/content/push">
+                    <el-menu-item index="/content/push">
+                        推送管理
+                    </el-menu-item>
+                </router-link>
+                <router-link  class="menu-indent" to="/content/all">
+                    <el-menu-item index="/content/all">
+                        所有内容
+                    </el-menu-item>
+                </router-link>
+            </el-submenu>
 
             <router-link  to="/example/tableList"  v-if="routes['/example/tableList']" >
                 <el-menu-item index="/example/tableList">
                     <i class="fa fa-table" aria-hidden="true"></i> 示例表格
-            
                 </el-menu-item>
             </router-link>
 
@@ -44,7 +91,7 @@
                
             </el-submenu>
             
-             <!-- 三级菜单 示例-->
+            <!-- 三级菜单 示例-->
             <el-submenu index="综合实例" v-if="routes['/example/form'] || routes['/example/tinymce'] || routes['/example/mixin'] ">
                 <template slot="title">
                     <i class="fa fa-envelope-open-o" aria-hidden="true"></i> 综合实例
