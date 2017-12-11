@@ -5,7 +5,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="标题" v-model="listQuery.title">
       </el-input>
 
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.atype" placeholder="类型">
         <el-option v-for="item in  typeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
@@ -81,20 +81,14 @@ import {api} from 'src/global/api';
 export default {
   data() {
     return {
-        // list: null,
-        // listLoading: true,
-
         list: null,//表格list
         total: null,
         listLoading: true,
         listQuery: {
             currPage: 1,
             pageSize: 10,
-
-            // importance: undefined,
             title: '',
-            type: null,//类型
-               
+            atype: null,//类型
         },
         temp: {
             "chnlId": "22",
@@ -108,7 +102,6 @@ export default {
           { key: '001', display_name: '类型1' },
           { key: '002', display_name: '类型2' },
           { key: '003', display_name: '类型3' }
-         
         ],
         multipleSelection: [],
         canPush: false

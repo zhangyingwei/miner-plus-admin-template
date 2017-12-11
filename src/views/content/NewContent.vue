@@ -67,7 +67,7 @@
         :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-    <!-- 新增弹窗 -->
+    <!-- 审核弹窗 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
       <div>
         <el-table
@@ -91,17 +91,25 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="atypepanel">
+        类型: 
+        <el-autocomplete
+          class="inline-input"
+          v-model="atype"
+          :fetch-suggestions="queryAtype"
+          placeholder="请输入类型"
+          @select="handleAtypeSelect"
+        ></el-autocomplete>
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleCreateSubmit">确 定</el-button>
+        <el-button type="primary" @click="handleCheckSubmit">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
 <script>
-// import { getList } from 'api/article';
 import {global} from 'src/global/global';
 import {api} from 'src/global/api';
 
@@ -110,29 +118,21 @@ export default {
     return {
         // list: null,
         // listLoading: true,
-
         list: null,//表格list
         total: null,
         listLoading: true,
+        atype: "", //审核时，文章类型
         listQuery: {
             currPage: 1,
             pageSize: 10,
-            // importance: undefined,
             title: '',
             sitename: '',//类型
-               
         },
         dialogTitle: "",
         temp: {
           showPushTime: true,
           data: []
         },
-        typeOptions:[
-          { key: '001', display_name: '类型1' },
-          { key: '002', display_name: '类型2' },
-          { key: '003', display_name: '类型3' }
-         
-        ],
         dialogFormVisible: false,
         multipleSelection: [],
         canClick: false
@@ -146,31 +146,22 @@ export default {
     //获取列表数据
     getList() {
         var vm = this;
-
         console.log(vm.listQuery)
-
         vm.listLoading = true;
-
         global.get( api.contentList,{params: vm.listQuery },function(res){
                 //console.log('-------获取到数据：',JSON.stringify(res) )
                 var data = res.body;
                if(data.resultCode == 0){ 
-                    
+                 vm.$message("加载数据成功")
                     vm.list = data.data.data;
                     console.log('列表数据：',vm.list);
                     vm.listQuery.currPage = data.data.currPage;
                     vm.listQuery.pageSize = data.data.pageSize;
                     vm.total = data.data.total;
-
                     vm.listLoading = false;
-                    
                }else{
                     //alert(res.body.resultMsg)
-                    Message({
-                        showClose: true,
-                        message: res.body.resultMsg,
-                        type: 'error'
-                    });
+                    vm.$message("加载失败了")
                     vm.listLoading = false;
                }
                
@@ -211,14 +202,12 @@ export default {
         this.temp.showPushTime = true;
     },
     //新增提交
-    handleCreateSubmit(){
+    handleCheckSubmit(){
         var vm = this;
         console.log('新增入参：',vm.temp,vm.list)
-
         //这里作演示用，正式新增 请提交到接口
         vm.list.push(vm.temp)
         console.log('新增后',vm.list)
-        
         this.dialogFormVisible = false;
     },
     handleSelectionChange(val) {
@@ -229,9 +218,24 @@ export default {
           this.canClick = false
         }
     },
-    formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
+    queryAtype(queryString, cb){
+      var result = [
+        {value: "java"},
+        {value: "javascript"},
+        {value: "go"},
+        {value: "php"}
+      ]
+      cb(result)
+    },
+    handleAtypeSelect(item){
+      console.log(item)
     }
   }
 };
 </script>
+
+<<style>
+  .atypepanel {
+    padding-top: 20px;
+  }
+</style>
